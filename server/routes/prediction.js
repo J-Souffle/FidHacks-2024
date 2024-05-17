@@ -3,11 +3,9 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const FormData = require('form-data');
-const fs = require('fs');
 
 // Function to predict image
-async function predictImage(imageUrl) {
+async function predictImage(imageUrl, threshold = 0.2) {
   try {
     const projectId = 'fe728ec0-d1b1-416d-8992-fa54b05a4221'; // Replace with your project ID
     const iterationId = '57b41417-5001-49e5-b29a-0d6560806dfd'; // Replace with your iteration ID
@@ -25,8 +23,11 @@ async function predictImage(imageUrl) {
       },
     });
 
-    // Return the predictions as response
-    return response.data;
+    // Filter predictions based on threshold
+    const filteredPredictions = response.data.predictions.filter(prediction => prediction.probability >= threshold);
+
+    // Return the filtered predictions
+    return filteredPredictions;
   } catch (error) {
     console.error('Error predicting image:', error);
     throw new Error('Internal server error');

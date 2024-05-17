@@ -61,13 +61,14 @@ const Home: React.FC = () => {
   
       console.log('Response:', response);
   
-      const predictions = response.data.predictions;
+      const predictions = response.data.predictions.filter((prediction: { probability: number }) => prediction.probability >= 0.2); // Filter predictions with probability >= 0.3
       console.log('Prediction results:', predictions);
       setPredictions(predictions);
     } catch (error) {
       console.error('Error processing image:', error);
     }
   };
+  
   
 
   const dataURItoBlob = (dataURI: string) => {
