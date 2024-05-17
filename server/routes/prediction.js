@@ -9,10 +9,10 @@ const fs = require('fs');
 // Function to predict image
 async function predictImage(imageUrl) {
   try {
-    const projectId = '208e9081-a204-49b8-ae65-cd8e6a94a8a4'; // Replace with your project ID
-    const iterationId = 'c87022e8-122f-4bb6-9d5d-3fa4c8547c9c'; // Replace with your iteration ID
-    const endpoint = 'https://bitcamp24cv.cognitiveservices.azure.com/'; // Replace with your Custom Vision endpoint
-    const predictionKey = '1d87c1bd5e6b46f4b72ec7c802390442'; // Replace with your prediction key
+    const projectId = 'fe728ec0-d1b1-416d-8992-fa54b05a4221'; // Replace with your project ID
+    const iterationId = '57b41417-5001-49e5-b29a-0d6560806dfd'; // Replace with your iteration ID
+    const endpoint = 'https://eastus.api.cognitive.microsoft.com/'; // Replace with your Custom Vision endpoint
+    const predictionKey = 'c4b12219b9e8480385b7c8b01a6a12dd'; // Replace with your prediction key
 
     // Construct the URL for QuickTestImage endpoint
     const predictionUrl = `${endpoint}/customvision/v3.3/Training/projects/${projectId}/quicktest/image?iterationId=${iterationId}&store=true`;

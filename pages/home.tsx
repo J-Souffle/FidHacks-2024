@@ -47,7 +47,7 @@ const Home: React.FC = () => {
         return;
       }
   
-      const predictionUrl = `https://bitcamp24cv-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/208e9081-a204-49b8-ae65-cd8e6a94a8a4/detect/iterations/Iteration4/image`;
+      const predictionUrl = `https://eastus.api.cognitive.microsoft.com/customvision/v3.0/Prediction/fe728ec0-d1b1-416d-8992-fa54b05a4221/detect/iterations/Iteration12/image`;
   
       const formData = new FormData();
       formData.append('image', dataURItoBlob(image)); // Convert data URI to Blob
@@ -55,7 +55,7 @@ const Home: React.FC = () => {
       const response = await axios.post(predictionUrl, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Prediction-Key': '1d87c1bd5e6b46f4b72ec7c802390442', // Replace with your prediction key
+          'Prediction-Key': 'c4b12219b9e8480385b7c8b01a6a12dd', // Replace with your prediction key
         },
       });
   
