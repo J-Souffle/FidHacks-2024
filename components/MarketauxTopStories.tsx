@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 
 const MarketauxTopStories = () => {
-  const [year, setYear] = useState('');
-  const [headlines, setHeadlines] = useState([]);
+  const [year, setYear] = useState<string>('');
+  const [headlines, setHeadlines] = useState<string[]>([]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setYear(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -25,7 +25,7 @@ const MarketauxTopStories = () => {
         }
       );
 
-      const stories = response.data.data.map((story) => story.title);
+      const stories: string[] = response.data.data.map((story: { title: string }) => story.title);
 
       // Update headlines state
       setHeadlines(stories);
