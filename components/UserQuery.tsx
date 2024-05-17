@@ -17,6 +17,16 @@ const StockMarketNews = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate month and year
+    const monthNumber = parseInt(month, 10);
+    if (isNaN(monthNumber) || monthNumber < 1 || monthNumber > 12) {
+      alert('Please enter a valid month (1-12).');
+      return;
+    }
+
+    const from = `${year}-${String(month).padStart(2, '0')}-01`;
+    const to = `${year}-${String(month).padStart(2, '0')}-31`;
+
     try {
       // Fetch stock market news for the specified year and month from Marketaux API
       const response = await axios.get(
@@ -24,8 +34,8 @@ const StockMarketNews = () => {
         {
           params: {
             api_token: 'PwPkEgBzBQrO5mY2RFkSHAVfDnJPZ84N30WK6jUm', // Replace with your actual API key
-            filter_entities: 'year,month',
-            entities: `${year}-${month}`,
+            from,
+            to,
             language: 'en' // Request news articles in English
           }
         }
@@ -60,7 +70,7 @@ const StockMarketNews = () => {
           type="text"
           value={month}
           onChange={handleMonthChange}
-          placeholder="Enter a month..."
+          placeholder="Enter a month (1-12)..."
           style={{ color: 'black' }}
         />
         <button type="submit">Get News</button>
