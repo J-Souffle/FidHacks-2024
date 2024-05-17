@@ -1,9 +1,11 @@
+// components/Home.tsx
 import React, { ChangeEvent, useState, useRef } from 'react';
-import axios from 'axios'; // Import axios for making HTTP requests
+import axios from 'axios';
 import "../app/globals.css";
 import ObjectDetectionResults from '../components/ObjectDetectionResults';
+import UserQuery from '../components/UserQuery'; // Import the ChatGPT component
 
-const Home = () => {
+const Home: React.FC = () => {
   const [image, setImage] = useState<string | null>(null);
   const [predictions, setPredictions] = useState<any[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -132,6 +134,8 @@ const Home = () => {
           <ObjectDetectionResults imageUrl={image} predictions={predictions} />
         </div>
       )}
+      
+      <UserQuery />
     </main>
   );
 };

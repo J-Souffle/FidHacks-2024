@@ -1,33 +1,48 @@
-// client/src/App.js
-import React, { useState } from 'react';
-import ObjectDetectionResults from './components/ObjectDetectionResults';
+const express = require('express');
+const axios = require('axios');
 
-const App = () => {
-  const [imageUrl, setImageUrl] = useState('');
+const app = express();
+const PORT = process.env.PORT || 5000;
 
-  const handleInputChange = (e) => {
-    setImageUrl(e.target.value);
-  };
+// Middleware
+app.use(express.json()); // Parse JSON bodies
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+// Route for handling user messages and communicating with ChatGPT
+app.post('/chat', async (req, res) => {
+  const userMessage = req.body.message;
 
-  return (
-    <div>
-      <h1>Object Detection App</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={imageUrl}
-          onChange={handleInputChange}
-          placeholder="Enter image URL"
-        />
-        <button type="submit">Submit</button>
-      </form>
-      {imageUrl && <ObjectDetectionResults imageUrl={imageUrl} />}
-    </div>
-  );
-};
+  try {
+    // Send user message to ChatGPT
+    const botResponse = await getChatGPTResponse(userMessage);
 
-export default App;
+    // Send bot's response back to the frontend
+    res.json({ response: botResponse });
+  } catch (error) {
+    console.error('Error sending message to ChatGPT:', error);
+    res.status(500).json({ error: 'An error occurred while processing your message' });
+  }
+});
+
+// Function to communicate with ChatGPT
+async function getChatGPTResponse(userMessage) {
+  const openaiApiKey = 'sk-proj-uLsQArJHs8hVTQWsZvtgT3BlbkFJ1ka84BmU9YLHUbcDP77G';
+  const response = await axios.post('https://api.openai.com/v1/completions', {
+    model: 'davinci',
+    prompt: userMessage,
+    max_tokens: 150,
+  }, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${openaiApiKey}`
+    }
+  });
+  
+  // Extract bot's response from OpenAI API response
+  const botResponse = response.data.choices[0].text.trim();
+  return botResponse;
+}
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
