@@ -1,7 +1,5 @@
 const axios = require('axios');
-const openaiApiKey = 'sk-proj-uLsQArJHs8hVTQWsZvtgT3BlbkFJ1ka84BmU9YLHUbcDP77G';
-
-// Your testAPIKey function and other code here...
+const openaiApiKey = 'your-api-key';
 
 async function testAPIKey() {
     try {
